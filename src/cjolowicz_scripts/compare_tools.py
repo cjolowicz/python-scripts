@@ -8,14 +8,19 @@ import shlex
 import statistics
 import subprocess  # noqa: S404
 import sys
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TypeVar
 
 import pygments.formatters
 import pygments.lexers
 
 
-def pairwise(iterable):
+T = TypeVar("T")
+
+
+def pairwise(iterable: Iterable[T]) -> Iterable[tuple[T, T]]:
     """Return an iterable of each element with its successor."""
     a, b = itertools.tee(iterable)
     next(b, None)
