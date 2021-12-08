@@ -9,6 +9,7 @@
    :maxdepth: 1
 
    usage
+   dependabot-rebase-all
    stardate
    reference
    contributing
