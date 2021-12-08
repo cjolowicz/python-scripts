@@ -55,6 +55,7 @@ cjolowicz-scripts = "cjolowicz_scripts.__main__:main"
 stardate = "cjolowicz_scripts.stardate:main"
 dependabot-rebase-all = "cjolowicz_scripts.dependabot_rebase_all:main"
 mbox2maildir = "cjolowicz_scripts.mbox2maildir:main"
+python-stdlib = "cjolowicz_scripts.python_stdlib:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]

@@ -11,6 +11,7 @@
    dependabot-rebase-all
    mbox2maildir
    stardate
+   python-stdlib
    reference
    contributing
    Code of Conduct <codeofconduct>
