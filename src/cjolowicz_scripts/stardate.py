@@ -1,3 +1,4 @@
+"""Display stargazers per time interval for a GitHub repository."""
 from __future__ import annotations
 
 import argparse
@@ -5,7 +6,6 @@ import datetime
 import hashlib
 import json
 import os
-import sys
 import time
 from collections import Counter
 from collections.abc import Iterable
@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import platformdirs
 import httpx
+import platformdirs
 from matplotlib import pyplot
 from rich import print
 from rich.console import Console
@@ -86,11 +86,11 @@ def parse_starred_at(results: Results) -> list[datetime.datetime]:
     """Parse the response."""
 
     def _() -> Iterator[datetime.datetime]:
-        assert isinstance(results, list), f"got {results = }"
+        assert isinstance(results, list), f"got {results = }"  # noqa: S101
         for stargazer in results:
-            assert isinstance(stargazer, dict)
+            assert isinstance(stargazer, dict)  # noqa: S101
             starred_at = stargazer["starred_at"]
-            assert isinstance(starred_at, str)
+            assert isinstance(starred_at, str)  # noqa: S101
             yield datetime.datetime.fromisoformat(starred_at.replace("Z", "+00:00"))
 
     return list(_())
