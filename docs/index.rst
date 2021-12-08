@@ -9,6 +9,7 @@
    :maxdepth: 1
 
    dependabot-rebase-all
+   mbox2maildir
    stardate
    reference
    contributing
