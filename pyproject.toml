@@ -23,6 +23,7 @@ httpx = ">=0.21.1"
 rich = ">=10.15.2"
 matplotlib = ">=3.5.0"
 "github3.py" = ">=3.0.0"
+Pygments = ">=2.10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.5"
@@ -55,6 +56,7 @@ stardate = "cjolowicz_scripts.stardate:main"
 dependabot-rebase-all = "cjolowicz_scripts.dependabot_rebase_all:main"
 mbox2maildir = "cjolowicz_scripts.mbox2maildir:main"
 python-stdlib = "cjolowicz_scripts.python_stdlib:main"
+compare-tools = "cjolowicz_scripts.compare_tools:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -80,6 +82,7 @@ show_error_context = true
 module = [
     "github3.*",
     "matplotlib.*",
+    "pygments.*",
 ]
 ignore_missing_imports = true
 
