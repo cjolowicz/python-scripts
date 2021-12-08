@@ -80,6 +80,7 @@ show_error_context = true
 
 [[tool.mypy.overrides]]
 module = [
+    "github3.*",
     "matplotlib.*",
 ]
 ignore_missing_imports = true
