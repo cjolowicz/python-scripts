@@ -262,16 +262,21 @@ def parse_interval(interval: str) -> datetime.timedelta:
     return datetime.timedelta(days=1)
 
 
-def main() -> None:
-    """Main entry point."""
-    token = os.environ["GITHUB_TOKEN"]
-
+def create_argument_parser() -> argparse.ArgumentParser:
+    """Return the command-line parser."""
     parser = argparse.ArgumentParser()
     parser.add_argument("repository")
     parser.add_argument("-i", "--interval")
     parser.add_argument("--plot", action="store_true", default=False)
     parser.add_argument("--cache", action="store_true", default=False)
+    return parser
 
+
+def main() -> None:
+    """Main entry point."""
+    token = os.environ["GITHUB_TOKEN"]
+
+    parser = create_argument_parser()
     args = parser.parse_args()
     interval = parse_interval(args.interval)
 
