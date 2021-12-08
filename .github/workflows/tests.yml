@@ -94,7 +94,7 @@ jobs:
 
       - name: Run Nox
         run: |
-          nox --force-color --python=${{ matrix.python }}
+          nox --force-color --python=${{ matrix.python }} --reuse-existing-virtualenvs
 
       - name: Upload coverage data
         if: always() && matrix.session == 'tests'
