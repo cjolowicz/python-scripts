@@ -22,6 +22,7 @@ platformdirs = "^2.4.0"
 httpx = "^0.21.1"
 rich = "^10.15.2"
 matplotlib = "^3.5.0"
+"github3.py" = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -51,6 +52,7 @@ furo = ">=2021.11.12"
 [tool.poetry.scripts]
 cjolowicz-scripts = "cjolowicz_scripts.__main__:main"
 stardate = "cjolowicz_scripts.stardate:main"
+dependabot-rebase-all = "cjolowicz_scripts.dependabot_rebase_all:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -63,7 +65,10 @@ source = ["cjolowicz_scripts", "tests"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
-omit = ["src/cjolowicz_scripts/stardate.py"]
+omit = [
+    "src/cjolowicz_scripts/stardate.py",
+    "src/cjolowicz_scripts/dependabot_rebase_all.py",
+]
 
 [tool.mypy]
 strict = true
@@ -75,6 +80,7 @@ show_error_context = true
 
 [[tool.mypy.overrides]]
 module = [
+    "github3.*",
     "matplotlib.*",
 ]
 ignore_missing_imports = true
