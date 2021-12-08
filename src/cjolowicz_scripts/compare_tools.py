@@ -22,8 +22,8 @@ def pairwise(iterable):
     return zip(a, b)
 
 
-def parse_args() -> argparse.Namespace:
-    """Parse the command-line options."""
+def create_argument_parser() -> argparse.ArgumentParser:
+    """Create the command-line parser."""
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
@@ -56,6 +56,12 @@ def parse_args() -> argparse.Namespace:
         "files",
         nargs="*",
     )
+    return parser
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the command-line options."""
+    parser = create_argument_parser()
     return parser.parse_args()
 
 
