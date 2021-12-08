@@ -1309,8 +1309,8 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.10"
-content-hash = "c72319a3e0ffd6e9c8114cc6030301c7cb2d87544456c0ecedeb2ea9d3e174c1"
+python-versions = ">=3.10"
+content-hash = "2c78f4df3bc71d6d5f02912e69a2f25bc1638c3d261d91a0e9f92e4b47c1f973"
 
 [metadata.files]
 alabaster = [
