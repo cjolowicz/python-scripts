@@ -57,6 +57,7 @@ dependabot-rebase-all = "cjolowicz_scripts.dependabot_rebase_all:main"
 mbox2maildir = "cjolowicz_scripts.mbox2maildir:main"
 python-stdlib = "cjolowicz_scripts.python_stdlib:main"
 compare-tools = "cjolowicz_scripts.compare_tools:main"
+randomline = "cjolowicz_scripts.randomline:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
