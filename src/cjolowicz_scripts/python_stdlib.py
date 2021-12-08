@@ -31,7 +31,7 @@ def main() -> None:
         sys.exit()
 
     prefix = args.name.split(".")
-    suffix = []
+    suffix: list[str] = []
 
     while prefix:
         module = ".".join(prefix)
