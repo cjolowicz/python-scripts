@@ -124,7 +124,9 @@ def get_stargazers_page(url: str, *, token: str, cache: bool = False) -> Page:
 
     response = request_stargazers(url, token=token, etag=etag)
 
-    if response.status_code != httpx.codes.NOT_MODIFIED:
+    if response.status_code == httpx.codes.NOT_MODIFIED:
+        assert page is not None  # noqa: S101
+    else:
         etag = response.headers["ETag"]
         link = parse_link_header(response)
         page = Page(url, link, etag, response.json(), False)
@@ -133,10 +135,21 @@ def get_stargazers_page(url: str, *, token: str, cache: bool = False) -> Page:
     return page
 
 
+def parse_query_string(url: str) -> dict[str, str]:
+    """Parse a query string."""
+
+    def _() -> Iterator[tuple[str, str]]:
+        query = httpx.URL(url).query.decode()
+        for field in query.split("&"):
+            key, value = field.split("=", 1)
+            yield key, value
+
+    return dict(_())
+
+
 def parse_page_parameter(url: str) -> int:
     """Return the current page and total number of pages."""
-    query = httpx.URL(url).query.decode()
-    variables = dict(field.split("=") for field in query.split("&"))
+    variables = parse_query_string(url)
     return int(variables.get("page", "0"))
 
 
