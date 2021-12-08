@@ -9,6 +9,7 @@
    :maxdepth: 1
 
    usage
+   stardate
    reference
    contributing
    Code of Conduct <codeofconduct>
