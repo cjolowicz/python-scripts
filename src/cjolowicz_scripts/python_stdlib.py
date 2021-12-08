@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Browse the Python Standard Library reference.
 
 Open the Python Standard Library reference [1] in the web browser. If
