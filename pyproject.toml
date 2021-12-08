@@ -52,6 +52,7 @@ furo = ">=2021.11.12"
 [tool.poetry.scripts]
 cjolowicz-scripts = "cjolowicz_scripts.__main__:main"
 stardate = "cjolowicz_scripts.stardate:main"
+dependabot-rebase-all = "cjolowicz_scripts.dependabot_rebase_all:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
