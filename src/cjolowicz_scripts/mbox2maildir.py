@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 
-def convert_mbox_to_maildir(path: Path):
+def convert_mbox_to_maildir(path: Path) -> None:
     """Convert mbox to maildir."""
     directory = path.parent / "{path.name}.d"
     for folder in ("tmp", "new", "cur"):
@@ -18,7 +18,7 @@ def convert_mbox_to_maildir(path: Path):
         maildir.add(message)
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     for arg in sys.argv[1:]:
         convert_mbox_to_maildir(Path(arg))
