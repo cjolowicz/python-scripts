@@ -19,6 +19,7 @@ Changelog = "https://github.com/cjolowicz/python-scripts/releases"
 python = "^3.10"
 click = "^8.0.1"
 platformdirs = "^2.4.0"
+httpx = "^0.21.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
