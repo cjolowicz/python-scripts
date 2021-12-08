@@ -1,0 +1,12 @@
+{
+  "_template": "https://github.com/cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Claudio Jolowicz",
+  "development_status": "Development Status :: 4 - Beta",
+  "email": "mail@claudiojolowicz.com",
+  "friendly_name": "Miscellaneous Python scripts",
+  "github_user": "cjolowicz",
+  "license": "MIT",
+  "package_name": "cjolowicz_scripts",
+  "project_name": "cjolowicz-scripts",
+  "version": "0.0.0"
+}
