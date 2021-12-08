@@ -22,8 +22,8 @@ Miscellaneous Python scripts
 .. |Read the Docs| image:: https://img.shields.io/readthedocs/cjolowicz-scripts/latest.svg?label=Read%20the%20Docs
    :target: https://cjolowicz-scripts.readthedocs.io/
    :alt: Read the documentation at https://cjolowicz-scripts.readthedocs.io/
-.. |Tests| image:: https://github.com/cjolowicz/cjolowicz-scripts/workflows/Tests/badge.svg
-   :target: https://github.com/cjolowicz/cjolowicz-scripts/actions?workflow=Tests
+.. |Tests| image:: https://github.com/cjolowicz/python-scripts/workflows/Tests/badge.svg
+   :target: https://github.com/cjolowicz/python-scripts/actions?workflow=Tests
    :alt: Tests
 .. |Codecov| image:: https://codecov.io/gh/cjolowicz/cjolowicz-scripts/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/cjolowicz/cjolowicz-scripts
@@ -95,7 +95,7 @@ This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter
 .. _MIT license: https://opensource.org/licenses/MIT
 .. _PyPI: https://pypi.org/
 .. _Hypermodern Python Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
-.. _file an issue: https://github.com/cjolowicz/cjolowicz-scripts/issues
+.. _file an issue: https://github.com/cjolowicz/python-scripts/issues
 .. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst

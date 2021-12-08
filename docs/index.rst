@@ -13,4 +13,4 @@
    contributing
    Code of Conduct <codeofconduct>
    License <license>
-   Changelog <https://github.com/cjolowicz/cjolowicz-scripts/releases>
+   Changelog <https://github.com/cjolowicz/python-scripts/releases>

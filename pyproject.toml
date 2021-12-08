@@ -5,15 +5,15 @@ description = "Miscellaneous Python scripts"
 authors = ["Claudio Jolowicz <mail@claudiojolowicz.com>"]
 license = "MIT"
 readme = "README.rst"
-homepage = "https://github.com/cjolowicz/cjolowicz-scripts"
-repository = "https://github.com/cjolowicz/cjolowicz-scripts"
+homepage = "https://github.com/cjolowicz/python-scripts"
+repository = "https://github.com/cjolowicz/python-scripts"
 documentation = "https://cjolowicz-scripts.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
 ]
 
 [tool.poetry.urls]
-Changelog = "https://github.com/cjolowicz/cjolowicz-scripts/releases"
+Changelog = "https://github.com/cjolowicz/python-scripts/releases"
 
 [tool.poetry.dependencies]
 python = "^3.7"
