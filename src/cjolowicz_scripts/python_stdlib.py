@@ -20,38 +20,44 @@ def create_argument_parser() -> argparse.ArgumentParser:
     return parser
 
 
-parser = create_argument_parser()
-args = parser.parse_args()
+def main() -> None:
+    """Main entry point."""
+    parser = create_argument_parser()
+    args = parser.parse_args()
 
-baseurl = "https://docs.python.org/library"
-if args.name is None:
-    webbrowser.open(baseurl)
-    sys.exit()
+    baseurl = "https://docs.python.org/library"
+    if args.name is None:
+        webbrowser.open(baseurl)
+        sys.exit()
 
-prefix = args.name.split(".")
-suffix = []
+    prefix = args.name.split(".")
+    suffix = []
 
-while prefix:
-    module = ".".join(prefix)
-    with contextlib.suppress(ModuleNotFoundError, AttributeError):
-        instance = importlib.import_module(module)
-        for part in suffix:
-            instance = getattr(instance, part)
-        break
-    suffix.insert(0, prefix.pop())
+    while prefix:
+        module = ".".join(prefix)
+        with contextlib.suppress(ModuleNotFoundError, AttributeError):
+            instance = importlib.import_module(module)
+            for part in suffix:
+                instance = getattr(instance, part)
+            break
+        suffix.insert(0, prefix.pop())
 
-if not prefix:
-    with contextlib.suppress(AttributeError):
-        instance = __builtins__
-        for part in suffix:
-            instance = getattr(instance, part)
-        module = "stdtypes"
+    if not prefix:
+        with contextlib.suppress(AttributeError):
+            instance = __builtins__
+            for part in suffix:
+                instance = getattr(instance, part)
+            module = "stdtypes"
 
-    if module != "stdtypes":
-        sys.exit(f"cannot import {args.name}")
+        if module != "stdtypes":
+            sys.exit(f"cannot import {args.name}")
 
-url = f"{baseurl}/{module}.html"
-if suffix:
-    url = "#".join((url, args.name))
+    url = f"{baseurl}/{module}.html"
+    if suffix:
+        url = "#".join((url, args.name))
 
-webbrowser.open(url)
+    webbrowser.open(url)
+
+
+if __name__ == "__main__":
+    main()
