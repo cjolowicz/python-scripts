@@ -63,6 +63,7 @@ source = ["cjolowicz_scripts", "tests"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
+omit = ["src/cjolowicz_scripts/stardate.py"]
 
 [tool.mypy]
 strict = true
