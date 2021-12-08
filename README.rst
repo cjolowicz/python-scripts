@@ -26,10 +26,14 @@ Miscellaneous Python scripts
    :alt: Codecov
 
 
+Welcome to my assortment of random Python scripts,
+all of which come with no guarantees whatsoever.
+
+
 Installation
 ------------
 
-You can install *Miscellaneous Python scripts* via pip_ from PyPI_:
+You can install these scripts via pip_ from PyPI_:
 
 .. code:: console
 
@@ -39,7 +43,7 @@ You can install *Miscellaneous Python scripts* via pip_ from PyPI_:
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ for details.
+Please see the Documentation_ for details.
 
 
 Contributing
@@ -53,7 +57,7 @@ License
 -------
 
 Distributed under the terms of the `MIT license`_,
-*Miscellaneous Python scripts* is free and open source software.
+these scripts are free and open source software.
 
 
 Issues
@@ -77,4 +81,4 @@ This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter
 .. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst
-.. _Usage: https://cjolowicz-scripts.readthedocs.io/en/latest/usage.html
+.. _Documentation: https://cjolowicz-scripts.readthedocs.io/
