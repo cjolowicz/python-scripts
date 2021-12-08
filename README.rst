@@ -26,10 +26,14 @@ Miscellaneous Python scripts
    :alt: Codecov
 
 
+Welcome to my assortment of random Python scripts,
+all of which come with no guarantees whatsoever.
+
+
 Installation
 ------------
 
-You can install *Miscellaneous Python scripts* via pip_ from PyPI_:
+You can install these scripts via pip_ from PyPI_:
 
 .. code:: console
 
@@ -53,7 +57,7 @@ License
 -------
 
 Distributed under the terms of the `MIT license`_,
-*Miscellaneous Python scripts* is free and open source software.
+these scripts are free and open source software.
 
 
 Issues
