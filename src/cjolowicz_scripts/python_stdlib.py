@@ -13,8 +13,14 @@ import sys
 import webbrowser
 
 
-parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("name", nargs="?", help="builtin, module, or module member")
+def create_argument_parser() -> argparse.ArgumentParser:
+    """Create a command-line parser."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("name", nargs="?", help="builtin, module, or module member")
+    return parser
+
+
+parser = create_argument_parser()
 args = parser.parse_args()
 
 baseurl = "https://docs.python.org/library"
