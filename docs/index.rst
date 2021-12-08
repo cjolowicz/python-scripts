@@ -8,7 +8,8 @@
    :hidden:
    :maxdepth: 1
 
-   usage
+   dependabot-rebase-all
+   stardate
    reference
    contributing
    Code of Conduct <codeofconduct>
