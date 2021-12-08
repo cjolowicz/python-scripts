@@ -61,9 +61,8 @@ jobs:
           pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
 
-      - name: Compute pre-commit cache key
-        if: matrix.session == 'pre-commit'
-        id: pre-commit-cache
+      - name: Compute Python version hash
+        id: python-version-hash
         shell: python
         run: |
           import hashlib
@@ -72,7 +71,7 @@ jobs:
           python = "py{}.{}".format(*sys.version_info[:2])
           payload = sys.version.encode() + sys.executable.encode()
           digest = hashlib.sha256(payload).hexdigest()
-          result = "${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])
+          result = "${{ runner.os }}-{}-{}".format(python, digest[:8])
 
           print("::set-output name=result::{}".format(result))
 
@@ -81,9 +80,17 @@ jobs:
         if: matrix.session == 'pre-commit'
         with:
           path: ~/.cache/pre-commit
-          key: ${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          key: ${{ steps.python-version-hash.outputs.result }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: |
-            ${{ steps.pre-commit-cache.outputs.result }}-
+            ${{ steps.python-version-hash.outputs.result }}-pre-commit-
+
+      - name: Restore Nox environments
+        uses: actions/cache@v2.1.7
+        with:
+          path: .nox
+          key: ${{ steps.python-version-hash.outputs.result }}-nox-${{ matrix.session }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ steps.python-version-hash.outputs.result }}-nox-${{ matrix.session }}-
 
       - name: Run Nox
         run: |
