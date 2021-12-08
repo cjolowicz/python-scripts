@@ -1,11 +1,7 @@
 Miscellaneous Python scripts
 ============================
 
-|PyPI| |Status| |Python Version| |License|
-
-|Read the Docs| |Tests| |Codecov|
-
-|pre-commit| |Black|
+|PyPI| |Status| |Python Version| |License| |Read the Docs| |Tests| |Codecov|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/cjolowicz-scripts.svg
    :target: https://pypi.org/project/cjolowicz-scripts/
@@ -28,12 +24,6 @@ Miscellaneous Python scripts
 .. |Codecov| image:: https://codecov.io/gh/cjolowicz/cjolowicz-scripts/branch/main/graph/badge.svg
    :target: https://codecov.io/gh/cjolowicz/cjolowicz-scripts
    :alt: Codecov
-.. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
-   :target: https://github.com/pre-commit/pre-commit
-   :alt: pre-commit
-.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
-   :alt: Black
 
 
 Installation
