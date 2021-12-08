@@ -2,7 +2,7 @@
    :end-before: github-only
 
 .. _Contributor Guide: contributing.html
-.. _Usage: usage.html
+.. _Documentation: index.html
 
 .. toctree::
    :hidden:

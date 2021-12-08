@@ -39,7 +39,7 @@ You can install *Miscellaneous Python scripts* via pip_ from PyPI_:
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ for details.
+Please see the Documentation_ for details.
 
 
 Contributing
@@ -77,4 +77,4 @@ This project was generated from `@cjolowicz`_'s `Hypermodern Python Cookiecutter
 .. _pip: https://pip.pypa.io/
 .. github-only
 .. _Contributor Guide: CONTRIBUTING.rst
-.. _Usage: https://cjolowicz-scripts.readthedocs.io/en/latest/usage.html
+.. _Documentation: https://cjolowicz-scripts.readthedocs.io/
