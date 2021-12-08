@@ -36,18 +36,6 @@ Miscellaneous Python scripts
    :alt: Black
 
 
-Features
---------
-
-* TODO
-
-
-Requirements
-------------
-
-* TODO
-
-
 Installation
 ------------
 
