@@ -507,7 +507,7 @@ flake8-polyfill = ">=1.0.2,<2"
 name = "platformdirs"
 version = "2.4.0"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1007,7 +1007,7 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a28cc367f72afab0c573cd36c9d3044889994ed19baf57e249a740a600e6e839"
+content-hash = "9fac8d17ae4e9d51b7fb764aa8e504a171c0ac019b4742140afccfc0524109b3"
 
 [metadata.files]
 alabaster = [
