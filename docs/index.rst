@@ -13,6 +13,7 @@
    mbox2maildir
    stardate
    python-stdlib
+   yaml2json
    contributing
    Code of Conduct <codeofconduct>
    License <license>
