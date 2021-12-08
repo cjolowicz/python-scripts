@@ -8,6 +8,7 @@
    :hidden:
    :maxdepth: 1
 
+   compare-tools
    dependabot-rebase-all
    mbox2maildir
    stardate
