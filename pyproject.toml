@@ -24,6 +24,7 @@ rich = ">=10.15.2"
 matplotlib = ">=3.5.0"
 "github3.py" = ">=3.0.0"
 Pygments = ">=2.10.0"
+PyYAML = ">=6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.5"

@@ -890,7 +890,7 @@ tokenize-rt = ">=3.2.0"
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1324,7 +1324,7 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10"
-content-hash = "db103482cfea9800acd0bd6ea9439ed79c3b2042ebcd35ec1098cc9488ab0158"
+content-hash = "82f2aa728f442ba56fedf3b1822d7e2d1d7d3e9548a5e3522950033542e4ff62"
 
 [metadata.files]
 alabaster = [
