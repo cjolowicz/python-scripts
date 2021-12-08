@@ -56,12 +56,12 @@ Install the package with development requirements:
    $ poetry install
 
 You can now run an interactive Python session,
-or the command-line interface:
+or the command-line tools:
 
 .. code:: console
 
    $ poetry run python
-   $ poetry run cjolowicz-scripts
+   $ poetry run <script>
 
 .. _Poetry: https://python-poetry.org/
 .. _Nox: https://nox.thea.codes/
