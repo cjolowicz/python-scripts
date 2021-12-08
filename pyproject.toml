@@ -64,7 +64,10 @@ source = ["cjolowicz_scripts", "tests"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
-omit = ["src/cjolowicz_scripts/stardate.py"]
+omit = [
+    "src/cjolowicz_scripts/stardate.py",
+    "src/cjolowicz_scripts/dependabot_rebase_all.py",
+]
 
 [tool.mypy]
 strict = true
