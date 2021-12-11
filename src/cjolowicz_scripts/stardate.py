@@ -287,18 +287,15 @@ def save_token(token: str) -> None:
     """Store the token in the cache."""
     cachedir = Path(platformdirs.user_cache_dir("stardate"))
     tokencache = cachedir / "token"
-    tokencache.parent.mkdir()
+    tokencache.parent.mkdir(exist_ok=True)
     tokencache.write_text(token)
 
 
 def find_token(args: argparse.Namespace) -> str | None:
     """Determine the GitHub API token."""
-    if args.token:
-        token: str = args.token
+    if token := args.token or os.environ.get("GITHUB_TOKEN"):
+        save_token(token)
         return token
-
-    with contextlib.suppress(KeyError):
-        return os.environ["GITHUB_TOKEN"]
 
     return load_token()
 
