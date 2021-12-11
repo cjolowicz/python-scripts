@@ -20,6 +20,7 @@ import platformdirs
 from matplotlib import pyplot
 from rich import print
 from rich.console import Console
+from rich.progress import Progress
 from rich.table import Table
 
 
@@ -160,7 +161,8 @@ def get_star_dates(
     """Retrieve the star dates for a repository."""
     url: str | None = f"https://api.github.com/repos/{repository}/stargazers"
 
-    with console.status(f"Downloading stargazers for {repository}") as status:
+    with Progress(console=console, transient=True) as progress:
+        task = progress.add_task("Downloading stargazers…")
         page = get_stargazers_page(url, token=token, cache=cache)
 
         yield from parse_starred_at(page.results)
@@ -169,10 +171,7 @@ def get_star_dates(
             if last := page.link.get("last"):
                 current = parse_page_parameter(url)
                 total = parse_page_parameter(last)
-                status.update(
-                    f"Downloading stargazers for {repository}"
-                    f" (page {current} of {total})"
-                )
+                progress.update(task, total=total, completed=current)
 
             if not page.cached:
                 time.sleep(1)
