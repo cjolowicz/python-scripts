@@ -159,27 +159,27 @@ def get_star_dates(
 ) -> Iterator[datetime.datetime]:
     """Retrieve the star dates for a repository."""
     url: str | None = f"https://api.github.com/repos/{repository}/stargazers"
-    page: Page | None = None
 
     with console.status(f"Downloading stargazers for {repository}") as status:
-        while url is not None:
-            if page:
-                if last := page.link.get("last"):
-                    current = parse_page_parameter(url)
-                    total = parse_page_parameter(last)
-                    status.update(
-                        f"Downloading stargazers for {repository}"
-                        f" (page {current} of {total})"
-                    )
+        page = get_stargazers_page(url, token=token, cache=cache)
 
-                if not page.cached:
-                    time.sleep(1)
+        yield from parse_starred_at(page.results)
+
+        while url := page.link.get("next"):
+            if last := page.link.get("last"):
+                current = parse_page_parameter(url)
+                total = parse_page_parameter(last)
+                status.update(
+                    f"Downloading stargazers for {repository}"
+                    f" (page {current} of {total})"
+                )
+
+            if not page.cached:
+                time.sleep(1)
 
             page = get_stargazers_page(url, token=token, cache=cache)
 
             yield from parse_starred_at(page.results)
-
-            url = page.link.get("next")
 
 
 def truncate(
