@@ -159,11 +159,13 @@ def get_star_dates(
     repository: str, *, token: str, console: Console, cache: bool = False
 ) -> Iterator[datetime.datetime]:
     """Retrieve the star dates for a repository."""
-    url: str | None = f"https://api.github.com/repos/{repository}/stargazers"
-
     with Progress(console=console, transient=True) as progress:
         task = progress.add_task("Downloading stargazers…")
-        page = get_stargazers_page(url, token=token, cache=cache)
+        page = get_stargazers_page(
+            f"https://api.github.com/repos/{repository}/stargazers",
+            token=token,
+            cache=cache,
+        )
 
         yield from parse_starred_at(page.results)
 
