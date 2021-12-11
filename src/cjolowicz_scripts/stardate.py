@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime
 import hashlib
 import json
@@ -269,16 +270,48 @@ def create_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("-i", "--interval")
     parser.add_argument("--plot", action="store_true", default=False)
     parser.add_argument("--cache", action="store_true", default=False)
+    parser.add_argument("--token")
     return parser
+
+
+def load_token() -> str | None:
+    """Read the token from the cache."""
+    cachedir = Path(platformdirs.user_cache_dir("stardate"))
+    tokencache = cachedir / "token"
+    with contextlib.suppress(FileNotFoundError):
+        return tokencache.read_text()
+    return None
+
+
+def save_token(token: str) -> None:
+    """Store the token in the cache."""
+    cachedir = Path(platformdirs.user_cache_dir("stardate"))
+    tokencache = cachedir / "token"
+    tokencache.parent.mkdir()
+    tokencache.write_text(token)
+
+
+def find_token(args: argparse.Namespace) -> str | None:
+    """Determine the GitHub API token."""
+    if args.token:
+        token: str = args.token
+        return token
+
+    with contextlib.suppress(KeyError):
+        return os.environ["GITHUB_TOKEN"]
+
+    return load_token()
 
 
 def main() -> None:
     """Main entry point."""
-    token = os.environ["GITHUB_TOKEN"]
-
     parser = create_argument_parser()
     args = parser.parse_args()
     interval = parse_interval(args.interval)
+    token = find_token(args)
+
+    if not token:
+        raise Exception("use --token or GITHUB_TOKEN to specify the API token")
 
     console = Console()
     dates = get_star_dates(
