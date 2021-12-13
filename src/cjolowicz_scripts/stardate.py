@@ -20,6 +20,7 @@ import platformdirs
 from matplotlib import pyplot
 from rich import print
 from rich.console import Console
+from rich.progress import Progress
 from rich.table import Table
 
 
@@ -158,28 +159,28 @@ def get_star_dates(
     repository: str, *, token: str, console: Console, cache: bool = False
 ) -> Iterator[datetime.datetime]:
     """Retrieve the star dates for a repository."""
-    url: str | None = f"https://api.github.com/repos/{repository}/stargazers"
-    page: Page | None = None
+    with Progress(console=console, transient=True) as progress:
+        task = progress.add_task("Downloading stargazers…")
+        page = get_stargazers_page(
+            f"https://api.github.com/repos/{repository}/stargazers",
+            token=token,
+            cache=cache,
+        )
 
-    with console.status(f"Downloading stargazers for {repository}") as status:
-        while url is not None:
-            if page:
-                if last := page.link.get("last"):
-                    current = parse_page_parameter(url)
-                    total = parse_page_parameter(last)
-                    status.update(
-                        f"Downloading stargazers for {repository}"
-                        f" (page {current} of {total})"
-                    )
+        yield from parse_starred_at(page.results)
 
-                if not page.cached:
-                    time.sleep(1)
+        while url := page.link.get("next"):
+            if last := page.link.get("last"):
+                current = parse_page_parameter(url)
+                total = parse_page_parameter(last)
+                progress.update(task, total=total, completed=current)
+
+            if not page.cached:
+                time.sleep(1)
 
             page = get_stargazers_page(url, token=token, cache=cache)
 
             yield from parse_starred_at(page.results)
-
-            url = page.link.get("next")
 
 
 def truncate(
