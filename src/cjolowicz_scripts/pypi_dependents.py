@@ -372,19 +372,19 @@ def main() -> None:
     stdout = Console()
     stderr = Console(stderr=True)
 
-    with httpx.Client(timeout=args.timeout) as client:
-        dependents = list(
-            get_dependents(
-                args.package,
-                client=client,
-                token=token,
-                console=stderr,
-                cache=args.cache,
-            )
-        )
-        top_pypi_page = get_top_pypi_page(client=client, cache=args.cache)
-
-    top_pypi = parse_top_pypi_page(top_pypi_page)
-
     with contextlib.suppress(BrokenPipeError, KeyboardInterrupt):
+        with httpx.Client(timeout=args.timeout) as client:
+            dependents = list(
+                get_dependents(
+                    args.package,
+                    client=client,
+                    token=token,
+                    console=stderr,
+                    cache=args.cache,
+                )
+            )
+            top_pypi_page = get_top_pypi_page(client=client, cache=args.cache)
+
+        top_pypi = parse_top_pypi_page(top_pypi_page)
+
         print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
