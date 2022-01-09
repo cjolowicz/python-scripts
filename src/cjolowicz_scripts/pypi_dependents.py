@@ -13,6 +13,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from typing import cast
 
 import httpx
 import platformdirs
@@ -375,7 +376,7 @@ def main() -> None:
         top_pypi_page = get_top_pypi_page(client=client, cache=args.cache)
 
     top_pypi = {
-        canonicalize_name(row["project"]): int(row["download_count"])
+        cast(str, canonicalize_name(row["project"])): int(row["download_count"])
         for row in top_pypi_page.data["rows"]
     }
 
