@@ -16,6 +16,7 @@ from typing import Any
 
 import httpx
 import platformdirs
+from packaging.utils import canonicalize_name
 from rich.console import Console
 from rich.progress import Progress
 from rich.table import Table
@@ -188,7 +189,7 @@ class Package:
             int(result["dependent_repos_count"]),
             int(result["dependents_count"]),
             int(result["forks"]),
-            result["name"],
+            canonicalize_name(result["name"]),
             int(result["rank"]),
             int(result["stars"]),
         )
@@ -342,7 +343,7 @@ def main() -> None:
     )
 
     top_pypi = {
-        row["project"]: int(row["download_count"])
+        canonicalize_name(row["project"]): int(row["download_count"])
         for row in get_top_pypi_page(cache=args.cache).data["rows"]
     }
     print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
