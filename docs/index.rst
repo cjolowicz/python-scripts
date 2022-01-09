@@ -12,6 +12,7 @@
    dependabot-rebase-all
    mbox2maildir
    stardate
+   pypi-dependents
    python-stdlib
    yaml2json
    contributing
