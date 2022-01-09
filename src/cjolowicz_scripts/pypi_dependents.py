@@ -104,10 +104,15 @@ def parse_page_parameter(url: str) -> int:
     return int(variables.get("page", "0"))
 
 
-def request_top_pypi(url: str, *, etag: str | None) -> httpx.Response:
+def request_top_pypi(
+    url: str,
+    *,
+    client: httpx.Client,
+    etag: str | None,
+) -> httpx.Response:
     """Request the list of top PyPI packages."""
     headers = {"If-None-Match": etag} if etag else {}
-    response = httpx.get(url, headers=headers)
+    response = client.get(url, headers=headers)
 
     if response.status_code != httpx.codes.NOT_MODIFIED:
         response.raise_for_status()
@@ -115,7 +120,7 @@ def request_top_pypi(url: str, *, etag: str | None) -> httpx.Response:
     return response
 
 
-def get_top_pypi_page(*, cache: bool = False) -> Page:
+def get_top_pypi_page(*, client: httpx.Client, cache: bool = False) -> Page:
     """Retrieve the page with the top PyPI packages."""
     url = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.json"
     page = load_page_from_cache(url)
@@ -124,7 +129,7 @@ def get_top_pypi_page(*, cache: bool = False) -> Page:
     if cache and page:
         return page
 
-    response = request_top_pypi(url, etag=etag)
+    response = request_top_pypi(url, client=client, etag=etag)
 
     if response.status_code == httpx.codes.NOT_MODIFIED:
         assert page is not None  # noqa: S101
@@ -136,11 +141,17 @@ def get_top_pypi_page(*, cache: bool = False) -> Page:
     return page
 
 
-def request_dependents(url: str, *, token: str, etag: str | None) -> httpx.Response:
+def request_dependents(
+    url: str,
+    *,
+    client: httpx.Client,
+    token: str,
+    etag: str | None,
+) -> httpx.Response:
     """Retrieve dependents from the API."""
     headers = {"If-None-Match": etag} if etag else {}
 
-    response = httpx.get(
+    response = client.get(
         url, headers=headers, params={"per_page": 100, "api_key": token}
     )
 
@@ -150,7 +161,13 @@ def request_dependents(url: str, *, token: str, etag: str | None) -> httpx.Respo
     return response
 
 
-def get_dependents_page(url: str, *, token: str, cache: bool = False) -> Page:
+def get_dependents_page(
+    url: str,
+    *,
+    client: httpx.Client,
+    token: str,
+    cache: bool = False,
+) -> Page:
     """Retrieve dependents from the cache or the API."""
     page = load_page_from_cache(url)
     etag = page.etag if page else None
@@ -158,7 +175,7 @@ def get_dependents_page(url: str, *, token: str, cache: bool = False) -> Page:
     if cache and page:
         return page
 
-    response = request_dependents(url, token=token, etag=etag)
+    response = request_dependents(url, client=client, token=token, etag=etag)
 
     if response.status_code == httpx.codes.NOT_MODIFIED:
         assert page is not None  # noqa: S101
@@ -196,13 +213,19 @@ class Package:
 
 
 def get_dependents(
-    package: str, *, token: str, console: Console, cache: bool = False
+    package: str,
+    *,
+    client: httpx.Client,
+    token: str,
+    console: Console,
+    cache: bool = False,
 ) -> Iterator[Package]:
     """Retrieve the dependents for a package."""
     with Progress(console=console, transient=True) as progress:
         task = progress.add_task("Downloading dependents…")
         page = get_dependents_page(
             f"https://libraries.io/api/pypi/{package}/dependents",
+            client=client,
             token=token,
             cache=cache,
         )
@@ -219,7 +242,7 @@ def get_dependents(
             if not page.cached:
                 time.sleep(1)
 
-            page = get_dependents_page(url, token=token, cache=cache)
+            page = get_dependents_page(url, client=client, token=token, cache=cache)
 
             for result in page.data:
                 yield Package.parse(result)
@@ -338,12 +361,22 @@ def main() -> None:
 
     stdout = Console()
     stderr = Console(stderr=True)
-    dependents = get_dependents(
-        args.package, token=token, console=stderr, cache=args.cache
-    )
+
+    with httpx.Client() as client:
+        dependents = list(
+            get_dependents(
+                args.package,
+                client=client,
+                token=token,
+                console=stderr,
+                cache=args.cache,
+            )
+        )
+        top_pypi_page = get_top_pypi_page(client=client, cache=args.cache)
 
     top_pypi = {
         canonicalize_name(row["project"]): int(row["download_count"])
-        for row in get_top_pypi_page(cache=args.cache).data["rows"]
+        for row in top_pypi_page.data["rows"]
     }
+
     print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
