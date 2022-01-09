@@ -266,6 +266,8 @@ def sort_packages(
 ) -> Iterable[Package]:
     """Sort packages by importance."""
     packages = list({p.name: p for p in packages}.values())
+    if not packages:
+        return packages
 
     top = Package(
         name="top",
