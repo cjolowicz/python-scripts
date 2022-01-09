@@ -142,6 +142,14 @@ def get_top_pypi_page(*, client: httpx.Client, cache: bool = False) -> Page:
     return page
 
 
+def parse_top_pypi_page(top_pypi_page: Page) -> Mapping[str, int]:
+    """Parse the top PyPI page into a mapping of packages to download counts."""
+    return {
+        cast(str, canonicalize_name(row["project"])): int(row["download_count"])
+        for row in top_pypi_page.data["rows"]
+    }
+
+
 def request_dependents(
     url: str,
     *,
@@ -375,10 +383,7 @@ def main() -> None:
         )
         top_pypi_page = get_top_pypi_page(client=client, cache=args.cache)
 
-    top_pypi = {
-        cast(str, canonicalize_name(row["project"])): int(row["download_count"])
-        for row in top_pypi_page.data["rows"]
-    }
+    top_pypi = parse_top_pypi_page(top_pypi_page)
 
     with contextlib.suppress(BrokenPipeError, KeyboardInterrupt):
         print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
