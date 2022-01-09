@@ -362,7 +362,7 @@ def main() -> None:
     stdout = Console()
     stderr = Console(stderr=True)
 
-    with httpx.Client() as client:
+    with httpx.Client(timeout=10.0) as client:
         dependents = list(
             get_dependents(
                 args.package,
