@@ -379,4 +379,5 @@ def main() -> None:
         for row in top_pypi_page.data["rows"]
     }
 
-    print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
+    with contextlib.suppress(BrokenPipeError, KeyboardInterrupt):
+        print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
