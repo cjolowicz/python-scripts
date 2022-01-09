@@ -23,8 +23,6 @@ from rich.table import Table
 
 APP_NAME = "pypi-dependents"
 
-Results = list[dict[str, Any]]
-
 
 @dataclass
 class Page:
@@ -33,7 +31,7 @@ class Page:
     url: str
     link: dict[str, str]
     etag: str
-    results: Results
+    data: Any
     cached: bool
 
 
@@ -43,7 +41,7 @@ def save_page_to_cache(page: Page) -> None:
         "url": page.url,
         "link": page.link,
         "etag": page.etag,
-        "results": page.results,
+        "data": page.data,
     }
 
     digest = hashlib.blake2b(page.url.encode()).hexdigest()
@@ -56,7 +54,7 @@ def save_page_to_cache(page: Page) -> None:
 
 
 def load_page_from_cache(url: str) -> Page | None:
-    """Load results from the cache."""
+    """Load page from the cache."""
     digest = hashlib.blake2b(url.encode()).hexdigest()
     cachedir = Path(platformdirs.user_cache_dir(APP_NAME))
     cache = cachedir / digest
@@ -66,14 +64,18 @@ def load_page_from_cache(url: str) -> Page | None:
 
     with cache.open() as io:
         data = json.load(io)
-        return Page(data["url"], data["link"], data["etag"], data["results"], True)
+        return Page(data["url"], data["link"], data["etag"], data["data"], True)
 
 
 def parse_link_header(response: httpx.Response) -> dict[str, str]:
     """Parse the Link header."""
 
     def _() -> Iterator[tuple[str, str]]:
-        header = response.headers["Link"]
+        try:
+            header = response.headers["Link"]
+        except KeyError:
+            return
+
         for field in header.split(","):
             url, rel = field.split(";")
             url = url.strip().removeprefix("<").removesuffix(">")
@@ -204,7 +206,7 @@ def get_dependents(
             cache=cache,
         )
 
-        for result in page.results:
+        for result in page.data:
             yield Package.parse(result)
 
         while url := page.link.get("next"):
@@ -218,7 +220,7 @@ def get_dependents(
 
             page = get_dependents_page(url, token=token, cache=cache)
 
-            for result in page.results:
+            for result in page.data:
                 yield Package.parse(result)
 
 
@@ -264,13 +266,14 @@ def sort_packages(
 ) -> Iterable[Package]:
     """Sort packages by importance."""
     packages = list({p.name: p for p in packages}.values())
+
     top = Package(
         name="top",
-        dependent_repos_count=max(p.dependent_repos_count for p in packages),
-        dependents_count=max(p.dependents_count for p in packages),
-        forks=max(p.forks for p in packages),
-        rank=max(p.rank for p in packages),
-        stars=max(p.stars for p in packages),
+        dependent_repos_count=max(1, *(p.dependent_repos_count for p in packages)),
+        dependents_count=max(1, *(p.dependents_count for p in packages)),
+        forks=max(1, *(p.forks for p in packages)),
+        rank=max(1, *(p.rank for p in packages)),
+        stars=max(1, *(p.stars for p in packages)),
     )
 
     def key(package: Package) -> float:
@@ -290,13 +293,13 @@ def sort_packages(
 
 def print_packages(
     packages: Iterable[Package],
-    package: str,
+    dependency: str,
     *,
     console: Console,
     top_pypi: Mapping[str, int],
 ) -> None:
     """Print the star dates for a repository."""
-    table = Table(title=package)
+    table = Table(title=dependency)
     table.add_column("Name")
     table.add_column("Downloads", justify="right")
     table.add_column("Stars", justify="right")
@@ -338,6 +341,6 @@ def main() -> None:
 
     top_pypi = {
         row["project"]: int(row["download_count"])
-        for row in get_top_pypi_page(cache=args.cache).results["rows"]
+        for row in get_top_pypi_page(cache=args.cache).data["rows"]
     }
     print_packages(dependents, args.package, console=stdout, top_pypi=top_pypi)
