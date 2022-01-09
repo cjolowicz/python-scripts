@@ -227,7 +227,7 @@ def get_dependents(
 
 def create_argument_parser() -> argparse.ArgumentParser:
     """Return the command-line parser."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("package")
     parser.add_argument("--cache", action="store_true", default=False)
     parser.add_argument("--token")
