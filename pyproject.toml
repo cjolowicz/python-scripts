@@ -60,6 +60,7 @@ mbox2maildir = "cjolowicz_scripts.mbox2maildir:main"
 python-stdlib = "cjolowicz_scripts.python_stdlib:main"
 compare-tools = "cjolowicz_scripts.compare_tools:main"
 yaml2json = "cjolowicz_scripts.yaml2json:main"
+pypi-dependents = "cjolowicz_scripts.pypi_dependents:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
