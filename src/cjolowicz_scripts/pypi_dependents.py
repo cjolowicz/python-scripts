@@ -263,6 +263,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("package")
     parser.add_argument("--cache", action="store_true", default=False)
     parser.add_argument("--token")
+    parser.add_argument("--timeout", type=float)
     return parser
 
 
@@ -371,7 +372,7 @@ def main() -> None:
     stdout = Console()
     stderr = Console(stderr=True)
 
-    with httpx.Client(timeout=10.0) as client:
+    with httpx.Client(timeout=args.timeout) as client:
         dependents = list(
             get_dependents(
                 args.package,
