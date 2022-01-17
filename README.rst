@@ -21,8 +21,8 @@ Miscellaneous Python scripts
 .. |Tests| image:: https://github.com/cjolowicz/python-scripts/workflows/Tests/badge.svg
    :target: https://github.com/cjolowicz/python-scripts/actions?workflow=Tests
    :alt: Tests
-.. |Codecov| image:: https://codecov.io/gh/cjolowicz/cjolowicz-scripts/branch/main/graph/badge.svg
-   :target: https://codecov.io/gh/cjolowicz/cjolowicz-scripts
+.. |Codecov| image:: https://codecov.io/gh/cjolowicz/python-scripts/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/cjolowicz/python-scripts
    :alt: Codecov
 
 
