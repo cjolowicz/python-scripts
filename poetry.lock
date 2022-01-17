@@ -980,7 +980,7 @@ requests = "*"
 
 [[package]]
 name = "setuptools-scm"
-version = "6.3.2"
+version = "6.4.0"
 description = "the blessed package to manage your versions by scm tags"
 category = "main"
 optional = false
@@ -991,7 +991,8 @@ packaging = ">=20.0"
 tomli = ">=1.0.0"
 
 [package.extras]
-toml = ["setuptools (>=42)", "tomli (>=1.0.0)"]
+test = ["pytest (>=6.2)", "virtualenv (>20)"]
+toml = ["setuptools (>=42)"]
 
 [[package]]
 name = "six"
@@ -2004,8 +2005,8 @@ safety = [
     {file = "safety-1.10.3.tar.gz", hash = "sha256:30e394d02a20ac49b7f65292d19d38fa927a8f9582cdfd3ad1adbbc66c641ad5"},
 ]
 setuptools-scm = [
-    {file = "setuptools_scm-6.3.2-py3-none-any.whl", hash = "sha256:4c64444b1d49c4063ae60bfe1680f611c8b13833d556fd1d6050c0023162a119"},
-    {file = "setuptools_scm-6.3.2.tar.gz", hash = "sha256:a49aa8081eeb3514eb9728fa5040f2eaa962d6c6f4ec9c32f6c1fba88f88a0f2"},
+    {file = "setuptools_scm-6.4.0-py3-none-any.whl", hash = "sha256:cd3906321824191cfd6972c1a8ad6f5171b49edc5996eba14bcbd33e98fb1ebe"},
+    {file = "setuptools_scm-6.4.0.tar.gz", hash = "sha256:54f5b1dcccd28e7813236609e620671f23d548548d744270a07d8df6df623649"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
