@@ -16,6 +16,7 @@ import rich.table
 import rich.traceback
 
 APP_NAME = "git-culpa"
+TOTALS = "null"
 
 
 def getcache() -> Path:
@@ -50,9 +51,7 @@ def dump(*, exclude: str | None) -> None:
     )
 
     filenames = process.stdout.splitlines()
-    contributions: dict[str, dict[str | None, int]] = defaultdict(
-        lambda: defaultdict(int)
-    )
+    contributions: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
 
     for filename in rich.progress.track(filenames, console=console):
         parts = filename.split("/")
@@ -66,7 +65,7 @@ def dump(*, exclude: str | None) -> None:
         for author in _parse_blame_incremental(process.stdout):
             for prefix in prefixes:
                 contributions[prefix][author] += 1
-                contributions[prefix][None] += 1
+                contributions[prefix][TOTALS] += 1
 
     with getcache().open(mode="w") as io:
         json.dump(contributions, io)
@@ -133,7 +132,7 @@ def compile_glob(pattern: str) -> re.Pattern[str]:
 def query(pathspecs: Iterable[str], *, top: int | None) -> None:
     """Query contributions."""
     with getcache().open() as io:
-        contributions: dict[str, dict[str | None, int]] = json.load(io)
+        contributions: dict[str, dict[str, int]] = json.load(io)
 
     patterns = [compile_glob(pathspec) for pathspec in pathspecs]
     if not patterns:
@@ -152,7 +151,7 @@ def query(pathspecs: Iterable[str], *, top: int | None) -> None:
 
         for path in paths:
             blame = contributions[path]
-            total = blame["null"]
+            total = blame[TOTALS]
 
             table = rich.table.Table(title=path or "Total")
             table.add_column("Author", width=author_width)
@@ -160,17 +159,17 @@ def query(pathspecs: Iterable[str], *, top: int | None) -> None:
             table.add_column("%Lines", justify="right", width=len("100.00%"))
 
             authors = sorted(
-                (author for author in blame if author != "null"),
+                (author for author in blame if author != TOTALS),
                 key=lambda author: blame[author],
                 reverse=True,
             )
             if top is not None:
                 authors = authors[:top]
 
-            for author in ("null", *authors):
+            for author in (TOTALS, *authors):
                 lines = blame[author]
                 percent = f"{100 * lines / total:.2f}%"
-                author = author if author != "null" else "Total"
+                author = author if author != TOTALS else "Total"
                 table.add_row(author, str(lines), percent)
 
             console.print(table)
