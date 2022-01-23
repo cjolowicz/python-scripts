@@ -73,22 +73,22 @@ def dump(*, exclude: str | None) -> None:
 
 
 def _compile_glob_character_class(pattern: str, pos: int) -> tuple[str, int]:
-    nextpos, length = pos, len(pattern)
+    start, end = pos, len(pattern)
 
-    if nextpos < length and pattern[nextpos] == "!":
-        nextpos += 1
+    if pos < end and pattern[pos] == "!":
+        pos += 1
 
-    if nextpos < length and pattern[nextpos] == "]":
-        nextpos += 1
+    if pos < end and pattern[pos] == "]":
+        pos += 1
 
-    while nextpos < length and pattern[nextpos] != "]":
-        nextpos += 1
+    while pos < end and pattern[pos] != "]":
+        pos += 1
 
-    if nextpos >= length:
-        return r"\[", pos
+    if pos >= end:
+        return r"\[", start
 
-    cclass = pattern[pos:nextpos].replace("\\", "\\\\")
-    pos = nextpos + 1
+    cclass = pattern[start:pos].replace("\\", "\\\\")
+    pos += 1
 
     if cclass[0] == "!":
         cclass = "^" + cclass[1:]
