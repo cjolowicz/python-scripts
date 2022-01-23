@@ -23,6 +23,21 @@ def getcache() -> Path:
     return Path(f".{APP_NAME}.json")
 
 
+def _parse_blame_incremental(text: str) -> Iterator[str]:
+    """Yield the author of each line."""
+    authors = {}
+    sha = ""
+    for line in text.splitlines():
+        tag, _, payload = line.partition(" ")
+        if len(tag) == 40:
+            sha = tag
+        elif sha:
+            if tag == "author":
+                authors[sha] = payload
+            if tag == "filename":
+                yield authors[sha]
+
+
 def dump(pathspecs: Iterable[str]) -> None:
     """Dump contributions."""
     console = rich.console.Console(stderr=True)
@@ -47,19 +62,10 @@ def dump(pathspecs: Iterable[str]) -> None:
             text=True,
             stdout=subprocess.PIPE,
         )
-        authors = {}
-        sha = ""
-        for line in process.stdout.splitlines():
-            tag, _, payload = line.partition(" ")
-            if len(tag) == 40:
-                sha = tag
-            elif sha:
-                if tag == "author":
-                    authors[sha] = payload
-                if tag == "filename":
-                    for prefix in prefixes:
-                        contributions[prefix][authors[sha]] += 1
-                        contributions[prefix][None] += 1
+        for author in _parse_blame_incremental(process.stdout):
+            for prefix in prefixes:
+                contributions[prefix][author] += 1
+                contributions[prefix][None] += 1
 
     with getcache().open(mode="w") as io:
         json.dump(contributions, io)
