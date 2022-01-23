@@ -38,11 +38,12 @@ def _parse_blame_incremental(text: str) -> Iterator[str]:
                 yield authors[sha]
 
 
-def dump(pathspecs: Iterable[str]) -> None:
+def dump(*, exclude: str | None) -> None:
     """Dump contributions."""
     console = rich.console.Console(stderr=True)
+    options = ["--", f":(exclude){exclude}"] if exclude else []
     process = subprocess.run(  # noqa: S603, S607
-        ["git", "ls-files", "--", *pathspecs],
+        ["git", "ls-files", *options],
         check=True,
         text=True,
         stdout=subprocess.PIPE,
@@ -212,6 +213,6 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.invalidate or not getcache().exists():
-        dump(args.pathspecs)
+        dump(exclude=args.exclude)
 
     query(args.pathspecs, top=args.top)
