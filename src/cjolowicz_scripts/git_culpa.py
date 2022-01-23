@@ -114,7 +114,7 @@ def _compile_glob_expression(pattern: str, pos: int) -> tuple[str, int]:
     return re.escape(character), pos
 
 
-def compile_glob(pattern: str) -> str:
+def compile_glob(pattern: str) -> re.Pattern[str]:
     """Translate glob pattern to a regular expression."""
     # https://stackoverflow.com/a/29820981/1355754
 
