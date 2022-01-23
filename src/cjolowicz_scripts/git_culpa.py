@@ -205,7 +205,7 @@ def main() -> None:
     parser = create_argument_parser()
     args = parser.parse_args()
 
-    if args.dump or not getcache().exists():
+    if args.invalidate or not getcache().exists():
         dump(args.pathspecs)
 
     query(args.pathspecs, top=args.top)
