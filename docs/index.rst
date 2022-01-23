@@ -10,6 +10,7 @@
 
    compare-tools
    dependabot-rebase-all
+   git-culpa
    mbox2maildir
    stardate
    pypi-dependents
